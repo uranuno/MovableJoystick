@@ -10,6 +10,10 @@ public class PlayerControl : MonoBehaviour {
 	new Transform transform;
 
 	Vector2 m_lookTarget;
+	
+	void Awake () {
+		Application.targetFrameRate = 60;
+	}
 
 	void Start () {
 		rigidbody = GetComponent<Rigidbody> ();
