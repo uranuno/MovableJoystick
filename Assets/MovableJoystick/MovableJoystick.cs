@@ -7,10 +7,10 @@ using UnityEngine.UI;
 public class MovableJoystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler {
 
 	[SerializeField]
-	RectTransform stickObject;
+	RectTransform content;
 
 	[SerializeField]
-	RectTransform baseObject;
+	RectTransform stick;
 
 	public float radius = 100f;
 
@@ -30,7 +30,9 @@ public class MovableJoystick : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 		CrossPlatformInputManager.RegisterVirtualAxis(verticalVirtualAxis);
 
 		// 可動範囲 = 基盤の大きさ
-		if (baseObject != null) baseObject.sizeDelta = Vector2.one * radius * 2;
+		content.sizeDelta = Vector2.one * radius * 2;
+		// stickの親がcontent
+		stick.SetParent(content,false);
 
 		// 一旦(0,0)へ
 		MoveTo(Vector2.zero);
@@ -42,26 +44,25 @@ public class MovableJoystick : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 	}
 
 	void MoveTo (Vector2 pos) {
-		startPos = pos;
-		stickObject.position = pos;
-		if (baseObject != null) baseObject.position = pos;
+		content.position = pos;
+		stick.localPosition = Vector2.zero;
 	}
 
 	public void OnPointerUp (PointerEventData data) {
-		stickObject.position = startPos;
+		stick.localPosition = Vector2.zero;
 		UpdateVirtualAxes (Vector2.zero);
 	}
 
 	public void OnDrag (PointerEventData data) {
-		Vector2 value = data.position - startPos;
+		Vector2 value = (Vector2)data.position - (Vector2)content.position;
 		UpdateVirtualAxes (value);
 	}
 
 	void UpdateVirtualAxes (Vector2 value) {
 		// 移動位置を指定の半径内で制限する
 		value = Vector2.ClampMagnitude (value, radius);
-
-		stickObject.position = startPos + value;
+		// stickを移動
+		stick.localPosition = value;
 
 		Vector2 normalizedValue = value / radius;
 		horizontalVirtualAxis.Update (normalizedValue.x);
