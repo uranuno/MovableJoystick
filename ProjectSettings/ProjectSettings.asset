@@ -16,8 +16,8 @@ PlayerSettings:
   m_ShowUnitySplashScreen: 1
   defaultScreenWidth: 1024
   defaultScreenHeight: 768
-  defaultScreenWidthWeb: 480
-  defaultScreenHeightWeb: 720
+  defaultScreenWidthWeb: 360
+  defaultScreenHeightWeb: 640
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   m_ActiveColorSpace: 0
