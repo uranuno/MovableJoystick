@@ -20,8 +20,6 @@ public class MovableJoystick : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 	CrossPlatformInputManager.VirtualAxis horizontalVirtualAxis;
 	CrossPlatformInputManager.VirtualAxis verticalVirtualAxis;
 
-	Vector2 startPos;
-
 	void OnEnable () {
 		horizontalVirtualAxis = new CrossPlatformInputManager.VirtualAxis(horizontalAxisName);
 		verticalVirtualAxis = new CrossPlatformInputManager.VirtualAxis(verticalAxisName);
@@ -40,7 +38,6 @@ public class MovableJoystick : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
 	public void OnPointerDown (PointerEventData data) {
 		MoveTo (data.position);
-		OnDrag (data);
 	}
 
 	void MoveTo (Vector2 pos) {
@@ -49,7 +46,6 @@ public class MovableJoystick : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 	}
 
 	public void OnPointerUp (PointerEventData data) {
-		stick.localPosition = Vector2.zero;
 		UpdateVirtualAxes (Vector2.zero);
 	}
 
